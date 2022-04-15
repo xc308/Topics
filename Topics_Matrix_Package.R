@@ -246,3 +246,39 @@ identical(Bs, bandSparse(n, k = bk, diag = bMat, symmetric = T))
 
 
 
+##=======
+# colSums
+##=======
+
+(M <- bdiag(Diagonal(2), matrix(1:3, 3,4), diag(3:2)))
+colSums(M)
+
+d <- Diagonal(10, c(0,0,10,0,2,rep(0,5)))
+
+MM <- kronecker(d, M)
+dim(MM)
+MM@x
+length(MM@x)
+MM <- drop0(MM)
+length(MM@x)
+
+
+cm <- colSums(MM)
+sp_cm <- colSums(MM, sparseResult = T)
+
+is(sp_cm, "sparseVector") # [1] TRUE
+str(sp_cm)
+identical(cm, as.numeric(sp_cm))
+# [1] TRUE
+
+rowSums(MM, sparseResult = T)
+# sparse vector (nnz/length = 14/70) of class "dsparseVector"
+
+
+
+
+
+
+
+
+
